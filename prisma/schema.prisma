@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  handle    String   @unique
+  email     String?  @unique
+  password  String
+  name      String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  diffs     Diff[]
+  comments  Comment[]
+}
+
+model Diff {
+  id              String         @id @default(cuid())
+  shortId         String         @unique
+  label           String?
+  leftContent     String
+  rightContent    String
+  fileType        String         @default("json")
+  commentsEnabled Boolean        @default(true)
+  isResolved      Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  authorId        String?
+  author          User?          @relation(fields: [authorId], references: [id])
+  comments        Comment[]
+  lineResolutions LineResolved[]
+}
+
+model Comment {
+  id           String   @id @default(cuid())
+  diffId       String
+  diff         Diff     @relation(fields: [diffId], references: [id])
+  lineNumber   Int?
+  side         String?  // "left" or "right"
+  content      String
+  author       String   @default("Anonymous")
+  authorHandle String?  @default("anon")
+  authorId     String?
+  user         User?    @relation(fields: [authorId], references: [id])
+  isSystem     Boolean  @default(false)
+  isLineStatus Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model LineResolved {
+  id         String   @id @default(cuid())
+  diffId     String
+  diff       Diff     @relation(fields: [diffId], references: [id])
+  lineNumber Int
+  side       String   // "left" or "right"
+  isResolved Boolean  @default(true)
+  updatedAt  DateTime @updatedAt
+
+  @@unique([diffId, lineNumber, side])
+}

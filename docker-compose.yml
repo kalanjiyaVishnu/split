@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATABASE_URL=file:/app/data/diff.db
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    restart: unless-stopped
