@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ Split Premium
+### The Surgical Precision Diffing Suite for Modern Teams
 
-## Getting Started
+Split Premium is a high-performance workbench designed for developers who demand excellence in code reviews and data analysis. It combines traditional diffing tools with state-of-the-art graph visualizations to provide a comprehensive understanding of changes.
 
-First, run the development server:
+![Split Premium Hero](/home/vishnu/.gemini/antigravity/brain/02f6bea4-88a6-4077-bd1a-aa78ddc24aa8/media__1777088564104.png)
 
+## ✨ Features
+
+### 🔍 Precision Diffing
+- **Side-by-Side & Unified Views**: Toggle between layout modes for maximum clarity.
+- **Line-Level Commentary**: Add discussions directly to any line in the diff.
+- **Resolution Tracking**: Mark specific changes as resolved to streamline reviews.
+
+### 🌐 Dual-Engine Visualization
+- **Premium Interactive Graph**: A custom-built, native React Flow engine with **Deep Path Navigation**. Click any node to instantly jump to the editor.
+- **Classic JSONCrack**: Integration with the industry-standard JSONCrack engine for beautiful 3D-style graphs.
+- **Visualizer Studio**: A dedicated standalone environment (`/visualizer`) for focused data analysis.
+
+### 💎 Elite Workbench UX
+- **Solo Focus Mode**: Double-click any panel header to maximize it instantly.
+- **Adaptive Layout**: Hide or show the Editors, Diff, and Visualizer with seamless transitions.
+- **Glassmorphism Design**: A premium dark-mode aesthetic built for focus and craftsmanship.
+
+### 🔐 Secure & Collaborative
+- **Full Auth System**: Personal user accounts with persistent history.
+- **Saved Diffs**: Archive your work and share it with teammates via unique IDs.
+- **Local-First Reliability**: Your data remains in your control, backed by a local SQLite database.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Installation
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+
+# Install dependencies
+npm install
+
+# Setup database
+npx prisma db push
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Navigation
+- `/`: Premium Landing Page
+- `/workbench`: The Main Diffing Studio
+- `/visualizer`: Standalone Visualization Studio
+- `/saved`: Your Diff Archive
+- `/about`: Project Mission & Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technology Stack
+- **Framework**: Next.js 14 (App Router)
+- **UI Components**: Tailwind CSS + Shadcn/UI
+- **Icons**: Lucide React
+- **Database**: Prisma + SQLite
+- **Visualization**: React Flow, Dagre, JSONCrack
+- **Editor**: Monaco Editor
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+> [!TIP]
+> Use **Double-Click** on any header tile in the Workbench to enter Solo Mode. Double-click again to restore your previous layout.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built with craftsmanship by **Antigravity**.
