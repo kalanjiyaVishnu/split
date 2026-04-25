@@ -56,23 +56,15 @@ export default function SavedDiffView({ params }: { params: { id: string } }) {
   const leftEditorRef = useRef<InputPanelHandle>(null);
   const rightEditorRef = useRef<InputPanelHandle>(null);
 
-  useEffect(() => {
-    fetchDiff();
-    fetchComments();
-    fetchLineStatuses();
-    fetchSession();
-    if (typeof document !== "undefined") {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    }
-  }, []);
 
-  const fetchSession = async () => {
+
+  const fetchSession = useCallback(async () => {
     const res = await fetch("/api/auth/me");
     const data = await res.json();
     if (data.user) setUser(data.user);
-  };
+  }, []);
 
-  const fetchDiff = async () => {
+  const fetchDiff = useCallback(async () => {
     try {
       const res = await fetch(`/api/diff/${params.id}`);
       const data = await res.json();
@@ -83,23 +75,33 @@ export default function SavedDiffView({ params }: { params: { id: string } }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id, toast]);
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
-      const res = await fetch(`/api/comments/${params.id}`);
+      const res = await fetch(`/api/comments?diffId=${params.id}`);
       const data = await res.json();
       setComments(data);
     } catch (e) {}
-  };
+  }, [params.id]);
 
-  const fetchLineStatuses = async () => {
+  const fetchLineStatuses = useCallback(async () => {
     try {
-      const res = await fetch(`/api/diff/${params.id}/line-status`);
+      const res = await fetch(`/api/diff/${params.id}/status`);
       const data = await res.json();
       if (Array.isArray(data)) setLineStatuses(data);
     } catch (e) {}
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    fetchDiff();
+    fetchComments();
+    fetchLineStatuses();
+    fetchSession();
+    if (typeof document !== "undefined") {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    }
+  }, [fetchDiff, fetchComments, fetchLineStatuses, fetchSession]);
 
   const handleNodeClick = useCallback((path: string, side: 'left' | 'right') => {
     if (!diffData) return;

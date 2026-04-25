@@ -32,7 +32,7 @@ export default function AboutPage() {
               Surgical Precision
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Our diffing engine doesn't just look for text changes. It understands the underlying structure of your data, allowing you to visualize movements, deletions, and updates with absolute clarity.
+              Our diffing engine doesn&apos;t just look for text changes. It understands the underlying structure of your data, allowing you to visualize movements, deletions, and updates with absolute clarity.
             </p>
           </div>
           <div className="space-y-4">
@@ -41,7 +41,7 @@ export default function AboutPage() {
               Developer Experience
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Every pixel in Split is tuned for the developer. From the JetBrains Mono typography to the Instrument Serif discussion threads, we've built a workbench that feels premium because your work is premium.
+              Every pixel in Split is tuned for the developer. From the JetBrains Mono typography to the Instrument Serif discussion threads, we&apos;ve built a workbench that feels premium because your work is premium.
             </p>
           </div>
         </section>

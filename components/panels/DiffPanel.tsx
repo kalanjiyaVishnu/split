@@ -142,7 +142,7 @@ export function DiffPanel({
         }
       });
     });
-  }, [html, comments, lineStatuses, viewType]);
+  }, [html, comments, lineStatuses, viewType, onToggleLineStatus]);
 
   const handleSubmitComment = () => {
     if (!commentText.trim() || !activeCommentLine) return;

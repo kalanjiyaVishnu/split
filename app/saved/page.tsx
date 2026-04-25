@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { 
   Table, 
   TableBody, 
@@ -31,11 +31,9 @@ export default function SavedDiffs() {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchDiffs();
-  }, []);
 
-  const fetchDiffs = async () => {
+
+  const fetchDiffs = useCallback(async () => {
     try {
       const res = await fetch("/api/diff");
       const data = await res.json();
@@ -52,7 +50,11 @@ export default function SavedDiffs() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchDiffs();
+  }, [fetchDiffs]);
 
   const handleDelete = async (shortId: string) => {
     if (!confirm("Are you sure you want to delete this diff?")) return;

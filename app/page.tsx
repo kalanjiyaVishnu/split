@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Zap, 
   ArrowRight, 
-  GitDiff, 
+  FileDiff, 
   Network, 
   MessageSquare, 
   ShieldCheck,
