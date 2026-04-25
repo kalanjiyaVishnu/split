@@ -1,13 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
     const statuses = await prisma.lineResolved.findMany({
-      where: { diffId: params.id },
+      where: { 
+        diff: { shortId: params.id }
+      },
     });
     return NextResponse.json(statuses);
   } catch (error) {
+    console.error('Error fetching line statuses:', error);
     return NextResponse.json({ error: 'Failed to fetch line statuses' }, { status: 500 });
   }
 }
@@ -17,17 +22,25 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     const body = await req.json();
     const { lineNumber, side, isResolved } = body;
 
+    const diff = await prisma.diff.findUnique({
+      where: { shortId: params.id }
+    });
+
+    if (!diff) {
+      return NextResponse.json({ error: 'Diff not found' }, { status: 404 });
+    }
+
     const status = await prisma.lineResolved.upsert({
       where: {
         diffId_lineNumber_side: {
-          diffId: params.id,
+          diffId: diff.id,
           lineNumber,
           side,
         },
       },
       update: { isResolved },
       create: {
-        diffId: params.id,
+        diffId: diff.id,
         lineNumber,
         side,
         isResolved,
