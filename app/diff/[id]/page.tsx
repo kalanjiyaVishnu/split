@@ -204,7 +204,7 @@ export default function SavedDiffView({ params }: { params: { id: string } }) {
   }, [diffData]);
 
   const stats = useMemo(() => {
-    if (!diffData) return { addedLines: 0, removedLines: 0, changedLines: 0, matchPercentage: 0 };
+    if (!diffData) return { addedLines: 0, removedLines: 0, changedLines: 0, similarity: 0 };
     return computeDiffStats(unifiedDiff, diffData.leftContent, diffData.rightContent, diffData.fileType);
   }, [unifiedDiff, diffData]);
 
