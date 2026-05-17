@@ -413,18 +413,8 @@ export default function Home() {
             
             {(visiblePanels.diff || visiblePanels.visualizer) && (
               <ResizablePanel defaultSize={visiblePanels.editors ? 65 : 100} minSize={5} className="flex flex-col gap-1.5 relative group/panel animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="absolute top-2 right-4 z-20 opacity-0 group-hover/panel:opacity-100 transition-opacity flex gap-2">
-                   <Button 
-                     variant="secondary" 
-                     size="icon" 
-                     className="h-7 w-7 rounded-full glass border-white/10 shadow-xl"
-                     onClick={() => soloPanel(visiblePanels.diff ? 'diff' : 'visualizer')}
-                     title="Solo Mode"
-                   >
-                      <Maximize2 className="w-3.5 h-3.5" />
-                   </Button>
-                </div>
-                
+
+
                 <div className="shrink-0 z-10 px-1">
                   <SummaryBar stats={stats} />
                 </div>
