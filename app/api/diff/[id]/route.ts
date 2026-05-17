@@ -3,10 +3,11 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     const diff = await prisma.diff.findUnique({
-      where: { shortId: params.id },
+      where: { shortId: id },
     });
 
     if (!diff) {
@@ -19,13 +20,14 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     const body = await req.json();
     const { isResolved, label } = body;
 
     const diff = await prisma.diff.update({
-      where: { shortId: params.id },
+      where: { shortId: id },
       data: {
         ...(isResolved !== undefined && { isResolved }),
         ...(label !== undefined && { label }),
@@ -38,14 +40,15 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     await prisma.comment.deleteMany({
-      where: { diff: { shortId: params.id } }
+      where: { diff: { shortId: id } }
     });
     
     await prisma.diff.delete({
-      where: { shortId: params.id },
+      where: { shortId: id },
     });
 
     return NextResponse.json({ success: true });

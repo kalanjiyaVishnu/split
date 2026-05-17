@@ -3,11 +3,12 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     const statuses = await prisma.lineResolved.findMany({
       where: { 
-        diff: { shortId: params.id }
+        diff: { shortId: id }
       },
     });
     return NextResponse.json(statuses);
@@ -17,13 +18,14 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     const body = await req.json();
     const { lineNumber, side, isResolved } = body;
 
     const diff = await prisma.diff.findUnique({
-      where: { shortId: params.id }
+      where: { shortId: id }
     });
 
     if (!diff) {
