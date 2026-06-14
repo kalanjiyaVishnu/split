@@ -441,6 +441,7 @@ export default function Home() {
                             commentsEnabled={false} 
                             comments={[]} 
                             onAddComment={() => {}} 
+                            hideFullscreenButton={true}
                           />
                         </ResizablePanel>
                       )}

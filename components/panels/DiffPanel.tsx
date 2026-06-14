@@ -32,6 +32,7 @@ type DiffPanelProps = {
   lineStatuses?: LineStatus[];
   onAddComment: (lineNumber: number, side: string, content: string, author: string, handle: string) => void;
   onToggleLineStatus?: (lineNumber: number, side: string, isResolved: boolean) => void;
+  hideFullscreenButton?: boolean;
 };
 
 export function DiffPanel({ 
@@ -41,7 +42,8 @@ export function DiffPanel({
   comments, 
   lineStatuses = [],
   onAddComment,
-  onToggleLineStatus 
+  onToggleLineStatus,
+  hideFullscreenButton = false
 }: DiffPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeCommentLine, setActiveCommentLine] = useState<{line: number, side: string} | null>(null);
@@ -158,16 +160,18 @@ export function DiffPanel({
       "relative bg-transparent h-full",
       isFullscreen ? "fixed inset-0 z-[100] bg-background animate-fade-in p-6" : ""
     )}>
-      <div className="absolute top-4 right-8 z-10">
-        <Button 
-          variant="secondary" 
-          size="icon" 
-          className="h-8 w-8 glass rounded-full shadow-lg border-white/10" 
-          onClick={() => setIsFullscreen(!isFullscreen)}
-        >
-          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-        </Button>
-      </div>
+      {!hideFullscreenButton && (
+        <div className="absolute top-4 right-8 z-10">
+          <Button 
+            variant="secondary" 
+            size="icon" 
+            className="h-8 w-8 glass rounded-full shadow-lg border-white/10" 
+            onClick={() => setIsFullscreen(!isFullscreen)}
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+          </Button>
+        </div>
+      )}
 
       <div 
         ref={containerRef}

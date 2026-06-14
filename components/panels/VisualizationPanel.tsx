@@ -12,9 +12,10 @@ type VisualizationPanelProps = {
   rightJson: any;
   fileType: string;
   onNodeClick?: (path: string, side: 'left' | 'right') => void;
+  hideFullscreenButton?: boolean;
 };
 
-export function VisualizationPanel({ leftJson, rightJson, fileType, onNodeClick }: VisualizationPanelProps) {
+export function VisualizationPanel({ leftJson, rightJson, fileType, onNodeClick, hideFullscreenButton = false }: VisualizationPanelProps) {
   const [activeSide, setActiveSide] = useState<"left" | "right" | "both">("both");
   const [visualizerType, setVisualizerType] = useState<"classic" | "premium">("premium");
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -87,16 +88,18 @@ export function VisualizationPanel({ leftJson, rightJson, fileType, onNodeClick 
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-8 w-8 rounded-full" 
-            onClick={() => setIsFullscreen(!isFullscreen)}
-          >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-          </Button>
-        </div>
+        {!hideFullscreenButton && (
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 rounded-full" 
+              onClick={() => setIsFullscreen(!isFullscreen)}
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </Button>
+          </div>
+        )}
       </header>
 
       <div className="flex-1 min-h-0 relative">
